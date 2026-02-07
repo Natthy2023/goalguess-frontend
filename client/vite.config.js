@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://goalguessapi-8g12q0bk.b4a.run/',
         changeOrigin: true
       }
     }
