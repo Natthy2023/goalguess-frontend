@@ -3,8 +3,8 @@
 
 const getServerUrl = () => {
   // Check if running on localhost
-  if (window.location.hostname === 'goalguessapi-8g12q0bk.b4a.run/') {
-    return 'https://goalguessapi-8g12q0bk.b4a.run/';
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:5000';
   }
   
   // For remote connections via IP or domain
