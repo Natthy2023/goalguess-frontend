@@ -1,19 +1,21 @@
 // API Configuration for remote connections
 // Automatically detects server URL based on environment
 
-// Replace with your Render backend URL
-const BACKEND_URL = 'https://goalguess-backend.onrender.com';
+// src/config/api.js
+const LOCAL_BACKEND = 'http://localhost:5000';
+const PROD_BACKEND = 'https://goalguess-backend.onrender.com'; // your Render backend URL
 
-const getServerUrl = () => {
+const getBackendUrl = () => {
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return 'http://localhost:5000'; // local dev
+    return LOCAL_BACKEND;
   }
-  return BACKEND_URL; // production
+  return PROD_BACKEND;
 };
 
-export const API_URL = getServerUrl();
-export const SOCKET_URL = getServerUrl();
+export const API_URL = getBackendUrl();
+export const SOCKET_URL = getBackendUrl();
 
 console.log('API URL:', API_URL);
 console.log('Socket URL:', SOCKET_URL);
+
 
