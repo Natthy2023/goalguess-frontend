@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { API_BASE } from '../config/api';
 
 export default function Auth({ setUser, navigate, darkMode }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -16,7 +17,10 @@ export default function Auth({ setUser, navigate, darkMode }) {
     setError('');
 
     try {
-      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const endpoint = isLogin 
+  ? `${API_BASE}/auth/login` 
+  : `${API_BASE}/auth/register`;
+
       const data = isLogin
         ? { email, password }
         : { username, email, password };
