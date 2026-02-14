@@ -2,6 +2,11 @@
 // Automatically detects server URL based on environment
 
 // src/config/api.js
+
+export const API_BASE = window.location.hostname.includes('localhost')
+  ? 'http://localhost:5000/api' // dev backend
+  : 'https://goalguess-backend.onrender.com/api'; // production backend
+
 const LOCAL_BACKEND = 'http://localhost:5000';
 const PROD_BACKEND = 'https://goalguess-backend.onrender.com'; // your Render backend URL
 
