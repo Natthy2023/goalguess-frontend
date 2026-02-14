@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://goalguessapi-8g12q0bk.b4a.run/',
+        target: 'https://goalguess-backend.onrender.com/',
         changeOrigin: true
       }
     }
