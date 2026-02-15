@@ -3,6 +3,7 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 import { motion } from 'framer-motion';
 import { SOCKET_URL } from '../config/api';
+import { API_BASE } from '../config/api';
 
 export default function MultiplayerGame({ roomId, user, navigate, darkMode }) {
   const [room, setRoom] = useState(null);
@@ -57,7 +58,7 @@ export default function MultiplayerGame({ roomId, user, navigate, darkMode }) {
 
   const loadRoom = async () => {
     try {
-      const res = await axios.get(`/api/multiplayer/room/${roomId}`, {
+      const res = await axios.get(`${API_BASE}/multiplayer/room/${roomId}`, {
         timeout: 5000
       });
       setRoom(res.data);
@@ -76,7 +77,7 @@ export default function MultiplayerGame({ roomId, user, navigate, darkMode }) {
 
   const loadNextPlayer = async () => {
     try {
-      const res = await axios.get(`/api/players/random?difficulty=${room.difficulty}`, {
+      const res = await axios.get(`${API_BASE}/players/random?difficulty=${room.difficulty}`, {
         timeout: 5000
       });
       setPlayer(res.data);
@@ -119,7 +120,7 @@ export default function MultiplayerGame({ roomId, user, navigate, darkMode }) {
     const pointsEarned = isCorrect ? 2 : 0;
 
     try {
-      await axios.post(`/api/multiplayer/submit-answer/${roomId}`, {
+      await axios.post(`${API_BASE}/multiplayer/submit-answer/${roomId}`, {
         isCorrect,
         pointsEarned
       }, {
@@ -151,7 +152,7 @@ export default function MultiplayerGame({ roomId, user, navigate, darkMode }) {
 
   const leaveRoom = async () => {
     try {
-      await axios.post(`/api/multiplayer/leave-room/${roomId}`, {}, {
+      await axios.post(`${API_BASE}/multiplayer/leave-room/${roomId}`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       navigate('multiplayer-lobby');
@@ -162,7 +163,7 @@ export default function MultiplayerGame({ roomId, user, navigate, darkMode }) {
 
   const deleteRoom = async () => {
     try {
-      await axios.post(`/api/multiplayer/delete-room/${roomId}`, {}, {
+      await axios.post(`${API_BASE}/multiplayer/delete-room/${roomId}`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       navigate('multiplayer-lobby');
@@ -174,7 +175,7 @@ export default function MultiplayerGame({ roomId, user, navigate, darkMode }) {
 
   const finishGame = async () => {
     try {
-      await axios.post(`/api/multiplayer/finish-game/${roomId}`, {}, {
+      await axios.post(`${API_BASE}/multiplayer/finish-game/${roomId}`, {}, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setGameFinished(true);
