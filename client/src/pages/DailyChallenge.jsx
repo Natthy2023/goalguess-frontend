@@ -193,7 +193,7 @@ export default function DailyChallenge({ user, navigate, darkMode }) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-           onClick={() => navigate('/')}
+           onClick={() => navigate('home')}
             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-lg font-bold hover:shadow-lg transition-all"
           >
             Back to Home
