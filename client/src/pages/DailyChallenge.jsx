@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { API_BASE } from '../config/api';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export default function DailyChallenge({ user, navigate, darkMode }) {
   const [challenge, setChallenge] = useState(null);
@@ -14,7 +14,7 @@ export default function DailyChallenge({ user, navigate, darkMode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [timeUntilNext, setTimeUntilNext] = useState(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     checkChallengeStatus();
@@ -396,7 +396,7 @@ export default function DailyChallenge({ user, navigate, darkMode }) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/home')}
+            onClick={() => navigate('home')}
             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-lg font-bold hover:shadow-lg transition-all"
           >
             Back to Home
