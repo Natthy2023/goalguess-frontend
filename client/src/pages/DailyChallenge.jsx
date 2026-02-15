@@ -43,7 +43,7 @@ export default function DailyChallenge({ user, darkMode }) {
       }
 
       // Check if user already completed today's challenge
-      const statusRes = await axios.get(`/api/challenges/daily/status?userId=${user.id}`);
+      const statusRes = await axios.get(`${API_BASE}/challenges/daily/status?userId=${user.id}`);
       
       if (statusRes.data.isCompleted) {
         setGameState('completed');
