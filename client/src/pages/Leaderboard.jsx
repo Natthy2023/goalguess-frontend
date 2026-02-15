@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { API_BASE } from '../config/api';
 
 export default function Leaderboard({ navigate }) {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -11,7 +12,7 @@ export default function Leaderboard({ navigate }) {
 
   const loadLeaderboard = async () => {
     try {
-      const res = await axios.get('/api/leaderboard');
+      const res = await axios.get(`${API_BASE}/leaderboard`);
       // Ensure data is an array before setting
     if (Array.isArray(res.data)) {
       setLeaderboard(res.data);
