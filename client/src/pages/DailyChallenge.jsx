@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { API_BASE } from '../config/api';
 
 export default function DailyChallenge({ user, darkMode }) {
   const [challenge, setChallenge] = useState(null);
