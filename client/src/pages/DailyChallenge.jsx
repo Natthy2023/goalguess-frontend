@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { API_BASE } from '../config/api';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
-export default function DailyChallenge({ user, darkMode }) {
+export default function DailyChallenge({ user, navigate, darkMode }) {
   const [challenge, setChallenge] = useState(null);
   const [gameState, setGameState] = useState('loading'); // loading, completed, info, playing, finished
   const [guess, setGuess] = useState('');
@@ -14,7 +14,7 @@ export default function DailyChallenge({ user, darkMode }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [timeUntilNext, setTimeUntilNext] = useState(null);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   useEffect(() => {
     checkChallengeStatus();
@@ -269,7 +269,7 @@ const isCorrect =
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => window.history.back()}
+            onClick={() => navigate('home')}
             className={`w-full p-3 rounded-lg font-bold transition-all ${
               darkMode
                 ? 'bg-slate-700 hover:bg-slate-600 text-white'
@@ -397,7 +397,7 @@ const isCorrect =
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => window.history.back()}
+            onClick={() => navigate('home')}
             className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-lg font-bold hover:shadow-lg transition-all"
           >
             Back to Home
