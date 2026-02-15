@@ -87,7 +87,7 @@ export default function DailyChallenge({ user, darkMode }) {
       // Save completion
       if (user?.id) {
         try {
-          await axios.post('/api/challenges/daily/complete', {
+          await axios.post(`${API_BASE}/challenges/daily/complete`, {
             userId: user.id,
             score: finalScore
           });
