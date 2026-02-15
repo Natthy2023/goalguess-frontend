@@ -51,7 +51,7 @@ export default function DailyChallenge({ user, darkMode }) {
         setScore(statusRes.data.completionData?.score || 0);
       } else {
         // Load the challenge
-        const challengeRes = await axios.get('/api/players/image-mode/random');
+        const challengeRes = await axios.get(`${API_BASE}/players/image-mode/random`);
         setChallenge(challengeRes.data);
         setGameState('info');
       }
