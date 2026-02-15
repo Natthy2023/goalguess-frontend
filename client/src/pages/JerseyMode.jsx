@@ -39,12 +39,12 @@ export default function JerseyMode({ user, darkMode }) {
       const res = await axios.get(`${API_BASE}/teams/random-teams`, {
         timeout: 5000
       });
-      
+      const { correctTeam, options } = res.data;
       if (res.data) {
         // Shuffle options
         const shuffledOptions = res.data.options.sort(() => Math.random() - 0.5);
         setCurrentTeam({
-          ...res.data,
+          ...correctTeam,
           options: shuffledOptions
         });
       }
@@ -78,9 +78,10 @@ export default function JerseyMode({ user, darkMode }) {
     if (user) {
       try {
         await axios.post(`${API_BASE}/game/submit-answer`, {
-          userId: user.id,
-          isCorrect: true,
-          pointsEarned: score
+          playerId: correctTeam.name, // or generate a unique ID if needed
+          isCorrect,
+          pointsEarned: isCorrect ? 2 : 0,
+          hintLevel: 0
         }, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
