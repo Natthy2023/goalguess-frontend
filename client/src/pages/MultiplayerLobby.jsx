@@ -19,7 +19,7 @@ export default function MultiplayerLobby({ user, navigate, darkMode }) {
 
   const loadRooms = async () => {
     try {
-      const res = await axios.get('${API_BASE}/multiplayer/active-rooms', {
+      const res = await axios.get(`${API_BASE}/multiplayer/active-rooms`, {
         timeout: 5000
       });
       setRooms(res.data || []);
@@ -33,7 +33,7 @@ export default function MultiplayerLobby({ user, navigate, darkMode }) {
 
   const createRoom = async () => {
     try {
-      const res = await axios.post('${API_BASE}/multiplayer/create-room', 
+      const res = await axios.post(`${API_BASE}/multiplayer/create-room`, 
         { difficulty, maxPlayers },
         { 
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
