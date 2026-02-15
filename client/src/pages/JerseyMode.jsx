@@ -77,7 +77,7 @@ export default function JerseyMode({ user, darkMode }) {
     setGameState('finished');
     if (user) {
       try {
-        await axios.post('/api/game/submit-answer', {
+        await axios.post(`${API_BASE}/game/submit-answer`, {
           userId: user.id,
           isCorrect: true,
           pointsEarned: score
