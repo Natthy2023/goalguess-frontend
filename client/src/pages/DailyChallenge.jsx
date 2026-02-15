@@ -75,6 +75,14 @@ export default function DailyChallenge({ user, darkMode }) {
 
   const handleGuess = async () => {
     if (!guess.trim() || !challenge) return;
+    if (!challenge || !challenge.name) {
+  console.error("No valid challenge:", challenge);
+  setFeedback("⚠️ No daily challenge available yet.");
+  return;
+}
+
+const isCorrect =
+  guess.toLowerCase().trim() === challenge.name.toLowerCase().trim();
 
     const isCorrect = guess.toLowerCase().trim() === challenge.name.toLowerCase().trim();
 
