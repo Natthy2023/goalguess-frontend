@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { API_BASE } from '../config/api';
 
 export default function UserStats({ user, navigate }) {
   const [stats, setStats] = useState(null);
@@ -12,7 +13,7 @@ export default function UserStats({ user, navigate }) {
 
   const loadStats = async () => {
     try {
-      const res = await axios.get(`/api/stats/user/${user.id}`, {
+      const res = await axios.get(`${API_BASE}/stats/user/${user.id}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setStats(res.data);
