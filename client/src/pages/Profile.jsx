@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { API_BASE } from '../config/api';
 
 const AVATAR_OPTIONS = [
   '👨‍🦱', '👨‍🦲', '👨‍🦳', '👩‍🦱', '👩‍🦲', '👩‍🦳',
@@ -31,7 +32,7 @@ export default function Profile({ user, navigate, darkMode }) {
         avatar: selectedAvatar
       };
 
-      await axios.put('/api/auth/profile', updatedProfile, {
+      await axios.put(`${API_BASE}/auth/profile`, updatedProfile, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
 
