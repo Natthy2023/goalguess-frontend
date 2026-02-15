@@ -13,6 +13,7 @@ export default function JerseyMode({ user, darkMode }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [feedback, setFeedback] = useState('');
   const [loading, setLoading] = useState(false);
+  const [feedbackDelay, setFeedbackDelay] = useState(false); // new state
 
   useEffect(() => {
     if (gameState === 'playing' && timeLeft > 0) {
@@ -31,49 +32,54 @@ export default function JerseyMode({ user, darkMode }) {
     loadNextTeam();
   };
 
- const loadNextTeam = async () => {
+const loadNextTeam = async () => {
   setLoading(true);
+  setSelectedAnswer(null);
   setFeedback('');
-
   try {
     const res = await axios.get(`${API_BASE}/teams/random-teams`, { timeout: 5000 });
-    if (!res.data || !res.data.correctTeam || !res.data.options) {
-      throw new Error('Invalid team data');
+    const { correctTeam, options } = res.data;
+
+    if (!correctTeam || !options?.length) {
+      setFeedback('Failed to load valid team');
+      return;
     }
 
-    const shuffledOptions = res.data.options.sort(() => Math.random() - 0.5);
-    setCurrentTeam({
-      ...res.data,
-      options: shuffledOptions
-    });
+    const shuffledOptions = options.sort(() => Math.random() - 0.5);
+
+    setCurrentTeam({ correctTeam, options: shuffledOptions });
   } catch (error) {
     console.error('Error loading team:', error);
-    setFeedback('Failed to load team. Retrying...');
-    // Optionally retry after 2 seconds
-    setTimeout(loadNextTeam, 2000);
+    setFeedback('Failed to load team');
   } finally {
     setLoading(false);
   }
 };
 
 
-  const handleAnswer = async (selectedTeam) => {
-    if (gameState !== 'playing' || loading) return;
+  const handleAnswer = (selectedTeam) => {
+  if (gameState !== 'playing' || loading || feedbackDelay || !currentTeam) return;
 
-    setSelectedAnswer(selectedTeam);
-    const isCorrect = selectedTeam === currentTeam.correctTeam.name;
-    setQuestionsAnswered(questionsAnswered + 1);
+  setSelectedAnswer(selectedTeam);
+  const isCorrect = selectedTeam === currentTeam.correctTeam.name;
+  setQuestionsAnswered(prev => prev + 1);
+  setFeedbackDelay(true); // prevent further clicks until next team
 
-    if (isCorrect) {
-      setScore(score + 2);
-      setFeedback('✅ Correct!');
-      setTimeout(() => loadNextTeam(), 1000);
-    } else {
-      setFeedback(`❌ Wrong! It was ${currentTeam.correctTeam.name}`);
-      setTimeout(() => loadNextTeam(), 1500);
-    }
-  };
+  if (isCorrect) {
+    setScore(prev => prev + 2);
+    setFeedback('✅ Correct!');
+  } else {
+    setFeedback(`❌ Wrong! It was ${currentTeam.correctTeam.name}`);
+  }
 
+  // Show feedback for 1.5–2s, then load next team
+  setTimeout(() => {
+    loadNextTeam();
+    setSelectedAnswer(null);
+    setFeedback('');
+    setFeedbackDelay(false); // allow new clicks
+  }, 1500);
+};
   const endGame = async () => {
     setGameState('finished');
     if (user) {
