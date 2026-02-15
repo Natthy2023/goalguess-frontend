@@ -140,8 +140,7 @@ export default function HintMode({ user, darkMode }) {
   }
 
   const getMaxHints = () => {
-    if (difficulty === 'Expert') return 4;
-    return 3;
+    return 4;
   };
 
   const hints = [player.hints?.hint1, player.hints?.hint2, player.hints?.hint3, player.hints?.hint4];
@@ -248,7 +247,6 @@ export default function HintMode({ user, darkMode }) {
             <option>Easy</option>
             <option>Medium</option>
             <option>Hard</option>
-            <option>Expert</option>
           </select>
         </div>
 
