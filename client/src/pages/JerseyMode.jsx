@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { API_BASE } from '../config/api';
 
 export default function JerseyMode({ user, darkMode }) {
   const [gameState, setGameState] = useState('setup'); // setup, playing, finished
@@ -35,7 +36,7 @@ export default function JerseyMode({ user, darkMode }) {
     setSelectedAnswer(null);
     setFeedback('');
     try {
-      const res = await axios.get('/api/teams/random-teams', {
+      const res = await axios.get(`${API_BASE}/teams/random-teams`, {
         timeout: 5000
       });
       
