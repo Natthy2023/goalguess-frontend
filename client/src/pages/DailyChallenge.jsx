@@ -83,8 +83,7 @@ export default function DailyChallenge({ user, navigate, darkMode }) {
   return;
 }
 
-const isCorrect =
-  guess.toLowerCase().trim() === challenge.name.toLowerCase().trim();
+
 
     const isCorrect = guess.toLowerCase().trim() === challenge.name.toLowerCase().trim();
 
