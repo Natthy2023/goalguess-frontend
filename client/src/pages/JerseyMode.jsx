@@ -31,31 +31,31 @@ export default function JerseyMode({ user, darkMode }) {
     loadNextTeam();
   };
 
-  const loadNextTeam = async () => {
-    setLoading(true);
-    setSelectedAnswer(null);
-    setFeedback('');
-    try {
-      const res = await axios.get(`${API_BASE}/teams/random-teams`, {
-        timeout: 5000
-      });
-      const { correctTeam, options } = res.data;
-     if (res.data?.correctTeam && res.data?.options?.length) {
-  const shuffledOptions = res.data.options.sort(() => Math.random() - 0.5);
-  setCurrentTeam({
-    ...res.data.correctTeam,
-    options: shuffledOptions
-  });
-} else {
-  setFeedback('Failed to load valid team');
-}
-    } catch (error) {
-      console.error('Error loading team:', error);
-      setFeedback('Failed to load team');
-    } finally {
-      setLoading(false);
+ const loadNextTeam = async () => {
+  setLoading(true);
+  setFeedback('');
+
+  try {
+    const res = await axios.get(`${API_BASE}/teams/random-teams`, { timeout: 5000 });
+    if (!res.data || !res.data.correctTeam || !res.data.options) {
+      throw new Error('Invalid team data');
     }
-  };
+
+    const shuffledOptions = res.data.options.sort(() => Math.random() - 0.5);
+    setCurrentTeam({
+      ...res.data,
+      options: shuffledOptions
+    });
+  } catch (error) {
+    console.error('Error loading team:', error);
+    setFeedback('Failed to load team. Retrying...');
+    // Optionally retry after 2 seconds
+    setTimeout(loadNextTeam, 2000);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleAnswer = async (selectedTeam) => {
     if (gameState !== 'playing' || loading) return;
