@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { API_BASE } from '../config/api';
 
 export default function TimedMode({ user, navigate, darkMode }) {
   const [gameState, setGameState] = useState('setup'); // setup, playing, finished
@@ -34,7 +35,7 @@ export default function TimedMode({ user, navigate, darkMode }) {
   const loadNextPlayer = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`/api/players/random?difficulty=${difficulty}`, {
+      const res = await axios.get(`${API_BASE}/players/random?difficulty=${difficulty}`, {
         timeout: 5000
       });
       setPlayer(res.data);
@@ -69,7 +70,7 @@ export default function TimedMode({ user, navigate, darkMode }) {
     setGameState('finished');
     if (user) {
       try {
-        await axios.post('/api/game/submit-answer', {
+        await axios.post(`${API_BASE}/game/submit-answer`, {
           userId: user.id,
           isCorrect: true,
           pointsEarned: score
