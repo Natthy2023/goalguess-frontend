@@ -56,7 +56,7 @@ export default function HintMode({ user, darkMode }) {
 
       if (user) {
         try {
-          await axios.post('/api/game/submit-answer', {
+          await axios.post(`${API_BASE}/game/submit-answer`, {
             userId: user.id,
             playerId: player.id,
             isCorrect: true,
