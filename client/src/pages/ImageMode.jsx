@@ -59,18 +59,18 @@ export default function ImageMode({ user, darkMode }) {
       setScore(score + 2);
       // DO NOT reset wrong answers - they accumulate
 
-      if (user) {
+      if (user && player) {
         try {
           await axios.post(`${API_BASE}/game/submit-answer`, {
-            userId: user.id,
-            playerId: player.id,
-            isCorrect: true,
-            pointsEarned: 2
+           playerId: player.id || player._id, // make sure you have the right field
+           isCorrect: true,
+           pointsEarned: 2,
+           hintLevel: 0 // include hintLevel since backend expects it
           }, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
           });
         } catch (err) {
-          console.error('Error saving score:', err);
+          console.error('Error saving score:', err.response?.data || err.message);
         }
       }
 
