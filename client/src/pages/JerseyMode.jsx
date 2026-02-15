@@ -40,14 +40,15 @@ export default function JerseyMode({ user, darkMode }) {
         timeout: 5000
       });
       const { correctTeam, options } = res.data;
-      if (res.data) {
-        // Shuffle options
-        const shuffledOptions = res.data.options.sort(() => Math.random() - 0.5);
-        setCurrentTeam({
-          ...correctTeam,
-          options: shuffledOptions
-        });
-      }
+     if (res.data?.correctTeam && res.data?.options?.length) {
+  const shuffledOptions = res.data.options.sort(() => Math.random() - 0.5);
+  setCurrentTeam({
+    ...res.data.correctTeam,
+    options: shuffledOptions
+  });
+} else {
+  setFeedback('Failed to load valid team');
+}
     } catch (error) {
       console.error('Error loading team:', error);
       setFeedback('Failed to load team');
