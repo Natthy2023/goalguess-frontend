@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { API_BASE } from '../config/api';
 
 export default function HintMode({ user, darkMode }) {
   const [player, setPlayer] = useState(null);
@@ -23,7 +24,7 @@ export default function HintMode({ user, darkMode }) {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.get(`/api/players/random?difficulty=${difficulty}`, {
+      const res = await axios.get(`${API_BASE}/players/random?difficulty=${difficulty}`, {
         timeout: 5000
       });
       
