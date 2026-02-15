@@ -30,8 +30,8 @@ export default function ImageMode({ user, darkMode }) {
         throw new Error('No player data received');
       }
 
-      console.log('Player data:', res.data);
-      console.log('Image URL:', res.data.imageUrl);
+      // console.log('Player data:', res.data);
+      // console.log('Image URL:', res.data.imageUrl);
 
       setPlayer(res.data);
       
