@@ -12,9 +12,16 @@ export default function Leaderboard({ navigate }) {
   const loadLeaderboard = async () => {
     try {
       const res = await axios.get('/api/leaderboard');
+      // Ensure data is an array before setting
+    if (Array.isArray(res.data)) {
       setLeaderboard(res.data);
+    } else {
+      console.error('Leaderboard API did not return an array:', res.data);
+      setLeaderboard([]); // fallback
+    }
     } catch (error) {
       console.error('Error loading leaderboard:', error);
+      setLeaderboard([]); // fallback
     }
   };
 
